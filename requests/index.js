@@ -19,7 +19,7 @@ db.serialize(() => {
 
 app.use(express.json());
 
-app.post('/add', (req, res) => {
+app.get('/add', (req, res) => {
   const { ip, domain, email, phone, name } = req.query;
     console.log(ip, domain, email, phone, name)
   if (!domain || !ip || !email || !phone || !name) {
@@ -34,15 +34,6 @@ app.post('/add', (req, res) => {
     res.send('Данные успешно добавлены.');
   });
   stmt.finalize();
-});
-
-app.get('/contacts', (req, res) => {
-  db.all('SELECT * FROM requests', [], (err, rows) => {
-    if (err) {
-      return res.status(500).send('Ошибка при получении данных.');
-    }
-    res.json(rows);
-  });
 });
 
 app.listen(port, () => {
